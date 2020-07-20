@@ -1,9 +1,46 @@
 version: '3'
 
 services:
-  app:
+  testpcb:
     privileged: true
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PACKAGE=external/pcb
+        - MODE=test
+    volumes:
+    - .:/go/src/github.com/KOKthaweesak/go-container-debugging
+    ports:
+    - "2345:2345" # debugging endpoint
+    - "8080:8080" # application endpoint
+    # These settings may be important, but I found them to NOT be required
+    # security_opt:
+    # - "seccomp:unconfined"
+  testmain:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PACKAGE=
+        - MODE=test
+    volumes:
+    - .:/go/src/github.com/KOKthaweesak/go-container-debugging
+    ports:
+    - "2345:2345" # debugging endpoint
+    - "8080:8080" # application endpoint
+    # These settings may be important, but I found them to NOT be required
+    # security_opt:
+    # - "seccomp:unconfined"
+  main:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PACKAGE=
+        - MODE=debug
     volumes:
     - .:/go/src/github.com/KOKthaweesak/go-container-debugging
     ports:
