@@ -2,9 +2,10 @@ version: '3'
 
 services:
   app:
+    privileged: true
     build: .
     volumes:
-    - .:/go/src/github.com/olivere/go-container-debugging
+    - .:/go/src/github.com/KOKthaweesak/go-container-debugging
     ports:
     - "2345:2345" # debugging endpoint
     - "8080:8080" # application endpoint
